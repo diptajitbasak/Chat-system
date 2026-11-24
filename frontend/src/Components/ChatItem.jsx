@@ -2,15 +2,10 @@
 
 const ChatItem = ({ data }) => {
     return (
-        <div style={{
-            alignSelf: data.isBot ? 'flex-start' : 'flex-end',
-            padding: '10px 15px',
-            margin: '5px',
-            backgroundColor: data.isBot ? '#e5e5e5' : '#d1e7ff',
-            borderRadius: '10px',
-            maxWidth: '70%'
-        }}>
+        <div className={`message-row ${data.isBot ? 'message-row-bot' : 'message-row-user'}`}>
+          <div className={`message-bubble ${data.isBot ? 'message-bubble-bot' : 'message-bubble-user'}`}>
             {data.text}
+          </div>
         </div>
     );
 };

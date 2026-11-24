@@ -1,5 +1,8 @@
 const express = require("express")
-const cors = require("cors");;
+const cors = require("cors");
+require("dotenv").config();
+
+const { generateResponse } = require("./services/ai.service");
 
 const app = express();
 
@@ -28,6 +31,34 @@ app.get('/api/chat', (req, res) => {
         "totalMessages": 0
     })
 })
+
+app.post("/api/chat", async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        if (typeof message !== "string" || !message.trim()) {
+            return res.status(400).json({
+                message: "Message is required"
+            });
+        }
+
+        const aiResponse = await generateResponse(message);
+
+        res.json({
+            status: "success",
+            data: {
+                message: aiResponse
+            }
+        });
+
+    } catch (error) {
+        console.error("AI Error:", error);
+
+        res.status(500).json({
+            message: "Failed to generate AI response"
+        });
+    }
+});
 
 // Start server
 const PORT = 5000;
