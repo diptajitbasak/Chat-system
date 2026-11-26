@@ -2,6 +2,9 @@ const express = require("express")
 const cors = require("cors");
 require("dotenv").config();
 
+// Database
+const db = require("./config/database");
+
 const { generateResponse } = require("./services/ai.service");
 
 const app = express();
@@ -59,6 +62,19 @@ app.post("/api/chat", async (req, res) => {
         });
     }
 });
+
+// app.get("/api/db/tables", (req, res) => {
+//     const tables = db.prepare(`
+//         SELECT name
+//         FROM sqlite_master
+//         WHERE type = 'table'
+//         AND name NOT LIKE 'sqlite_%'
+//     `).all();
+
+//     res.json({
+//         tables
+//     });
+// });
 
 // Start server
 const PORT = 5000;
